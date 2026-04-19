@@ -1,11 +1,56 @@
 import { useState } from "react";
-import { Menu, MoonStar, Sun, X } from "lucide-react";
+import { Menu, MoonStar, Sun, X as XIcon } from "lucide-react";
 import {
   motion as Motion,
   AnimatePresence,
   useScroll,
   useSpring,
 } from "framer-motion";
+
+// Custom SKYX X-type Logo Component
+function SkyXLogo({ isDark }) {
+  return (
+    <div className="relative inline-flex h-9 w-9 items-center justify-center">
+      {/* Outer rotating ring */}
+      <Motion.div
+        className={`absolute inset-0 rounded-lg border-2 border-transparent bg-linear-to-r ${
+          isDark
+            ? "from-purple-400 via-pink-400 to-purple-400"
+            : "from-purple-600 via-pink-500 to-purple-600"
+        } bg-clip-border`}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Inner glow */}
+      <div
+        className={`absolute inset-1 rounded-lg backdrop-blur-sm ${
+          isDark
+            ? "bg-linear-to-br from-purple-500/20 to-pink-500/10"
+            : "bg-linear-to-br from-purple-500/30 to-pink-500/20"
+        }`}
+      />
+
+      {/* X Letter */}
+      <svg
+        className={`relative z-10 h-6 w-6 drop-shadow-lg ${
+          isDark ? "text-white" : "text-purple-900"
+        }`}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        {/* Diagonal lines forming X */}
+        <path
+          d="M 4 4 L 20 20 M 20 4 L 4 20"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          fill="none"
+        />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+      </svg>
+    </div>
+  );
+}
 
 const navAnimation = {
   hidden: { opacity: 0, y: -12 },
@@ -32,8 +77,10 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
       isActive
         ? isDark
           ? "text-cyan-100"
-          : "text-cyan-700"
-        : "text-slate-300 hover:text-cyan-300",
+          : "text-purple-700"
+        : isDark
+          ? "text-slate-300 hover:text-cyan-300"
+          : "text-slate-600 hover:text-purple-600",
     ].join(" ");
   };
 
@@ -42,20 +89,30 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
       <Motion.div
         aria-hidden="true"
         style={{ scaleX: smoothProgress }}
-        className="pointer-events-none fixed left-0 top-0 z-[70] h-0.5 w-full origin-left bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.9)]"
+        className={`pointer-events-none fixed left-0 top-0 z-70 h-0.5 w-full origin-left ${
+          isDark
+            ? "bg-purple-300 shadow-[0_0_14px_rgba(168,85,247,0.9)]"
+            : "bg-purple-500 shadow-[0_0_14px_rgba(139,69,193,0.7)]"
+        }`}
       />
       <Motion.header
         variants={navAnimation}
         initial="hidden"
         animate="visible"
-        className="sticky top-0 z-50 border-b border-cyan-500/20 bg-slate-950/85 backdrop-blur-xl"
+        className={`sticky top-0 z-50 border-b backdrop-blur-xl ${
+          isDark
+            ? "border-purple-500/20 bg-slate-950/85"
+            : "border-purple-200/40 bg-white/80"
+        }`}
       >
         <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <a href="#home" className="group flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-400/10 text-sm font-bold text-cyan-300 ring-1 ring-cyan-400/40">
-              {brand.ticker}
-            </span>
-            <span className="text-lg font-semibold tracking-wide text-white">
+            <SkyXLogo isDark={isDark} />
+            <span
+              className={`text-lg font-semibold tracking-wide ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
               {brand.name}
             </span>
           </a>
@@ -66,7 +123,11 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
                 {activeSection === link.href.replace("#", "") && (
                   <Motion.span
                     layoutId="active-nav-pill"
-                    className="absolute inset-0 rounded-full border border-cyan-300/40 bg-cyan-400/15 shadow-[0_0_14px_rgba(34,211,238,0.35)]"
+                    className={`absolute inset-0 rounded-full border shadow-[0_0_14px_rgba(168,85,247,0.35)] ${
+                      isDark
+                        ? "border-purple-300/40 bg-purple-400/15"
+                        : "border-purple-400/60 bg-purple-200/30"
+                    }`}
                     transition={{
                       type: "spring",
                       bounce: 0.22,
@@ -87,13 +148,21 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
               type="button"
               onClick={onThemeToggle}
               aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/10 text-cyan-200 transition hover:bg-cyan-300/20"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
+                isDark
+                  ? "border-purple-300/35 bg-purple-400/10 text-purple-200 hover:bg-purple-300/20"
+                  : "border-purple-400/40 bg-purple-200/20 text-purple-700 hover:bg-purple-300/30"
+              }`}
             >
               {isDark ? <Sun size={17} /> : <MoonStar size={17} />}
             </button>
             <a
               href="#apps"
-              className="rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                isDark
+                  ? "bg-purple-400 text-slate-950 hover:bg-purple-300"
+                  : "bg-purple-600 text-white hover:bg-purple-700"
+              }`}
             >
               Launch App
             </a>
@@ -104,7 +173,11 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
               type="button"
               onClick={onThemeToggle}
               aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-              className="inline-flex rounded-lg border border-cyan-400/30 p-2 text-cyan-300"
+              className={`inline-flex rounded-lg border p-2 ${
+                isDark
+                  ? "border-purple-400/30 text-purple-300"
+                  : "border-purple-400/40 text-purple-700"
+              }`}
             >
               {isDark ? <Sun size={18} /> : <MoonStar size={18} />}
             </button>
@@ -112,9 +185,13 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
               type="button"
               aria-label="Toggle menu"
               onClick={() => setIsOpen((value) => !value)}
-              className="inline-flex rounded-lg border border-cyan-400/30 p-2 text-cyan-300"
+              className={`inline-flex rounded-lg border p-2 ${
+                isDark
+                  ? "border-purple-400/30 text-purple-300"
+                  : "border-purple-400/40 text-purple-700"
+              }`}
             >
-              {isOpen ? <X size={18} /> : <Menu size={18} />}
+              {isOpen ? <XIcon size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </nav>
@@ -126,7 +203,11 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="max-h-[70vh] overflow-y-auto border-t border-cyan-500/20 bg-slate-950/95 px-4 py-4 lg:hidden"
+              className={`max-h-[70vh] overflow-y-auto border-t px-4 py-4 lg:hidden ${
+                isDark
+                  ? "border-purple-500/20 bg-slate-950/95"
+                  : "border-purple-200/40 bg-white/90"
+              }`}
             >
               <ul className="space-y-3">
                 {links.map((link) => (
@@ -135,10 +216,14 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
                       href={link.href}
                       onClick={closeMenu}
                       className={[
-                        "block rounded-lg px-3 py-2 text-sm font-medium transition hover:bg-slate-900 hover:text-cyan-300",
+                        "block rounded-lg px-3 py-2 text-sm font-medium transition",
                         activeSection === link.href.replace("#", "")
-                          ? "bg-cyan-400/15 text-cyan-200 ring-1 ring-cyan-300/35"
-                          : "text-slate-300",
+                          ? isDark
+                            ? "bg-purple-400/15 text-purple-200 ring-1 ring-purple-300/35"
+                            : "bg-purple-200/40 text-purple-700 ring-1 ring-purple-400/50"
+                          : isDark
+                            ? "text-slate-300 hover:bg-slate-900 hover:text-cyan-300"
+                            : "text-slate-600 hover:bg-purple-100 hover:text-purple-700",
                       ].join(" ")}
                     >
                       {link.label}
@@ -149,7 +234,11 @@ function Navbar({ brand, links, activeSection, theme, onThemeToggle }) {
               <a
                 href="#apps"
                 onClick={closeMenu}
-                className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950"
+                className={`mt-4 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-semibold ${
+                  isDark
+                    ? "bg-purple-400 text-slate-950"
+                    : "bg-purple-600 text-white"
+                }`}
               >
                 Launch App
               </a>

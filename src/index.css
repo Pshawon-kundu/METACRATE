@@ -1,8 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@500;700;800&display=swap");
 @import "tailwindcss";
 
+/* Performance optimizations */
+*,
+*::before,
+*::after {
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
   color-scheme: dark;
+  --animation-duration: 0.3s;
+  --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html[data-theme="light"] {
@@ -11,6 +28,7 @@ html[data-theme="light"] {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -22,6 +40,219 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+  position: relative;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a,
+input,
+textarea,
+select {
+  transition: all var(--animation-duration) var(--animation-timing);
+}
+
+/* Enhanced GPU acceleration for animations */
+.motion-div {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease-out;
+  will-change: transform;
+}
+
+.cursor::before,
+.cursor::after {
+  content: "";
+  position: absolute;
+  background: #a855f7;
+  box-shadow:
+    0 0 15px #a855f7,
+    0 0 30px rgba(168, 85, 247, 0.5),
+    inset 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.cursor::before {
+  width: 3px;
+  height: 30px;
+  left: 50%;
+  top: 0%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.cursor::after {
+  width: 30px;
+  height: 3px;
+  left: 0%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.cursor.hover::before,
+.cursor.hover::after {
+  box-shadow:
+    0 0 25px #ec4899,
+    0 0 40px rgba(236, 72, 153, 0.6),
+    inset 0 0 20px rgba(236, 72, 153, 0.4);
+  background: #ec4899;
+}
+
+/* Grid pattern background */
+.bg-grid-pattern-dark {
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0;
+  animation: grid-shift 20s linear infinite;
+}
+
+.bg-grid-pattern-light {
+  background-image:
+    linear-gradient(rgba(139, 69, 193, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 69, 193, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0;
+  animation: grid-shift 20s linear infinite;
+}
+
+@keyframes grid-shift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+/* Radial gradient background */
+.bg-radial-gradient {
+  background: radial-gradient(
+    ellipse at center,
+    var(--gradient-from) 0%,
+    var(--gradient-to) 100%
+  );
+}
+
+/* Smooth hover effects for interactive elements */
+button:hover,
+a:hover {
+  filter: brightness(1.1);
+}
+
+button:active,
+a:active {
+  transform: scale(0.98);
+}
+
+/* Section transition animations */
+section {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimized link transitions */
+a {
+  position: relative;
+}
+
+/* Smooth text transitions */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  transition: color 0.3s ease;
+}
+
+/* Loading states */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Smooth scroll behavior */
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Performance: Enable GPU acceleration */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 html[data-theme="light"] body {

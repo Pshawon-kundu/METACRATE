@@ -39,16 +39,16 @@ function BlockchainVisual({ theme = "dark" }) {
   const surfaceClass = isDark
     ? "bg-[radial-gradient(circle_at_50%_50%,rgba(14,116,144,0.2),rgba(2,6,23,0.92)_64%)]"
     : "bg-[radial-gradient(circle_at_50%_48%,rgba(34,211,238,0.24),rgba(237,248,255,0.95)_68%)]";
-  const linkStroke = isDark ? "rgba(125,211,252,0.55)" : "rgba(8,145,178,0.78)";
+  const linkStroke = isDark ? "rgba(168,85,247,0.55)" : "rgba(139,69,193,0.78)";
   const nodeClass = isDark
-    ? "border-cyan-200/65 bg-cyan-300/45 shadow-[0_0_16px_rgba(34,211,238,0.9)]"
-    : "border-cyan-700/55 bg-cyan-400/70 shadow-[0_0_16px_rgba(14,165,233,0.65)]";
+    ? "border-purple-200/65 bg-purple-300/45 shadow-[0_0_16px_rgba(168,85,247,0.9)]"
+    : "border-purple-700/55 bg-purple-400/70 shadow-[0_0_16px_rgba(139,69,193,0.65)]";
   const coreClass = isDark
-    ? "border-cyan-200/35 bg-cyan-300/5"
-    : "border-cyan-700/40 bg-cyan-600/10";
+    ? "border-purple-200/35 bg-purple-300/5"
+    : "border-purple-700/40 bg-purple-600/10";
   const coreCellClass = isDark
-    ? "border-cyan-200/35 bg-cyan-400/15"
-    : "border-cyan-700/45 bg-cyan-500/25";
+    ? "border-purple-200/35 bg-purple-400/15"
+    : "border-purple-700/45 bg-purple-500/25";
 
   return (
     <Motion.article
@@ -56,14 +56,14 @@ function BlockchainVisual({ theme = "dark" }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.5 }}
-      className="relative mb-8 overflow-hidden rounded-3xl border border-cyan-300/20 bg-slate-900/70 p-6 shadow-[0_0_55px_rgba(34,211,238,0.12)] sm:mb-10 sm:p-7"
+      className="relative mb-8 overflow-hidden rounded-3xl border border-purple-300/20 bg-slate-900/70 p-6 shadow-[0_0_55px_rgba(168,85,247,0.12)] sm:mb-10 sm:p-7"
     >
-      <div className="pointer-events-none absolute -left-10 top-8 h-40 w-40 rounded-full bg-cyan-400/20 blur-3xl" />
+      <div className="pointer-events-none absolute -left-10 top-8 h-40 w-40 rounded-full bg-purple-400/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-14 right-12 h-44 w-44 rounded-full bg-sky-500/20 blur-3xl" />
 
       <div className="relative z-10 flex flex-wrap items-end justify-between gap-5">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-purple-300">
             Chain Activity
           </p>
           <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">
@@ -74,13 +74,13 @@ function BlockchainVisual({ theme = "dark" }) {
             settlement flow across the MetaCrate network.
           </p>
         </div>
-        <div className="rounded-full border border-cyan-300/35 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-200">
+        <div className="rounded-full border border-purple-300/35 bg-purple-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-purple-200">
           12,240 tx / min
         </div>
       </div>
 
       <div
-        className={`relative mt-7 h-64 overflow-hidden rounded-2xl border border-cyan-300/20 sm:h-72 ${surfaceClass}`}
+        className={`relative mt-7 h-64 overflow-hidden rounded-2xl border border-purple-300/20 sm:h-72 ${surfaceClass}`}
       >
         <svg
           className="absolute inset-0 h-full w-full"
