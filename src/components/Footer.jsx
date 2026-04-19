@@ -1,204 +1,71 @@
-import { motion as Motion } from "framer-motion";
-import { animations } from "../data/animations";
-
-function Footer({ brand, links, isDark = true }) {
+function Footer({ brand, links }) {
   return (
-    <footer
-      className={`border-t py-12 ${
-        isDark
-          ? "border-slate-800 bg-slate-950"
-          : "border-purple-200/40 bg-white"
-      }`}
-    >
+    <footer className="border-t border-slate-800 bg-slate-950 py-12">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-5 lg:px-8">
-        <Motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={animations.viewport}
-          transition={{ duration: 0.5 }}
-          className="lg:col-span-2"
-        >
-          <Motion.p
-            className={`text-lg font-semibold ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            {brand.name}
-          </Motion.p>
-          <Motion.p
-            className={`mt-2 text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            Ticker: {brand.ticker}
-          </Motion.p>
-          <Motion.p
-            className={`mt-4 max-w-md text-sm leading-relaxed ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            Ultimate gaming platform connecting players worldwide with seamless
-            matchmaking and competitive arenas.
-          </Motion.p>
-        </Motion.div>
+        <div className="lg:col-span-2">
+          <p className="text-lg font-semibold text-white">{brand.name}</p>
+          <p className="mt-2 text-sm text-slate-400">Ticker: {brand.ticker}</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+            Infrastructure for borderless digital markets with high-performance
+            settlement and open developer access.
+          </p>
+        </div>
 
-        <Motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={animations.viewport}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Motion.p
-            className={`text-sm font-semibold uppercase tracking-wider ${
-              isDark ? "text-purple-300" : "text-purple-600"
-            }`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-cyan-300">
             Quick Links
-          </Motion.p>
-          <Motion.ul
-            variants={animations.staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={animations.viewport}
-            className="mt-3 space-y-2"
-          >
-            {links.slice(0, 4).map((link, index) => (
-              <Motion.li key={link.label} variants={animations.staggerItem}>
-                <Motion.a
+          </p>
+          <ul className="mt-3 space-y-2">
+            {links.slice(0, 4).map((link) => (
+              <li key={link.label}>
+                <a
                   href={link.href}
-                  className={`text-sm transition-colors ${
-                    isDark
-                      ? "text-slate-400 hover:text-purple-300"
-                      : "text-slate-600 hover:text-purple-600"
-                  }`}
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.2 }}
+                  className="text-sm text-slate-400 hover:text-cyan-300"
                 >
                   {link.label}
-                </Motion.a>
-              </Motion.li>
+                </a>
+              </li>
             ))}
-          </Motion.ul>
-        </Motion.div>
+          </ul>
+        </div>
 
-        <Motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={animations.viewport}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Motion.p
-            className={`text-sm font-semibold uppercase tracking-wider ${
-              isDark ? "text-purple-300" : "text-purple-600"
-            }`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-cyan-300">
             Docs
-          </Motion.p>
-          <Motion.ul
-            variants={animations.staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={animations.viewport}
-            className={`mt-3 space-y-2 text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            {["Developer Docs", "API Reference", "Security"].map(
-              (item, index) => (
-                <Motion.li key={item} variants={animations.staggerItem}>
-                  <Motion.a
-                    href="#about"
-                    className={`transition-colors ${
-                      isDark ? "hover:text-purple-300" : "hover:text-purple-600"
-                    }`}
-                    whileHover={{ x: 3 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {item}
-                  </Motion.a>
-                </Motion.li>
-              ),
-            )}
-          </Motion.ul>
-        </Motion.div>
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-slate-400">
+            <li>
+              <a href="#about" className="hover:text-cyan-300">
+                Developer Docs
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="hover:text-cyan-300">
+                API Reference
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="hover:text-cyan-300">
+                Security
+              </a>
+            </li>
+          </ul>
+        </div>
 
-        <Motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={animations.viewport}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <Motion.p
-            className={`text-sm font-semibold uppercase tracking-wider ${
-              isDark ? "text-purple-300" : "text-purple-600"
-            }`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={animations.viewport}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-cyan-300">
             Legal
-          </Motion.p>
-          <Motion.ul
-            variants={animations.staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={animations.viewport}
-            className={`mt-3 space-y-2 text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            {["Privacy Policy", "Terms of Use", "Risk Notice"].map(
-              (item, index) => (
-                <Motion.li key={item} variants={animations.staggerItem}>
-                  <Motion.span
-                    className={`transition-colors cursor-pointer ${
-                      isDark ? "hover:text-purple-300" : "hover:text-purple-600"
-                    }`}
-                    whileHover={{ x: 3 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {item}
-                  </Motion.span>
-                </Motion.li>
-              ),
-            )}
-          </Motion.ul>
-        </Motion.div>
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-slate-400">
+            <li>Privacy Policy</li>
+            <li>Terms of Use</li>
+            <li>Risk Notice</li>
+          </ul>
+        </div>
       </div>
-      <Motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={animations.viewport}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className={`mx-auto mt-10 w-full max-w-7xl border-t px-4 pt-6 text-xs sm:px-6 lg:px-8 ${
-          isDark
-            ? "border-slate-800 text-slate-500"
-            : "border-slate-300 text-slate-600"
-        }`}
-      >
+      <div className="mx-auto mt-10 w-full max-w-7xl border-t border-slate-800 px-4 pt-6 text-xs text-slate-500 sm:px-6 lg:px-8">
         {`© ${new Date().getFullYear()} ${brand.name}. All rights reserved.`}
-      </Motion.div>
+      </div>
     </footer>
   );
 }
